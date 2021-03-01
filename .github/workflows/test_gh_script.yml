@@ -15,6 +15,22 @@ jobs:
           - x64
     steps:
       - uses: actions/checkout@v2
+      
+      - run: echo hello > ~/world.txt
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ~/world.txt
+      
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: 'my-artifact'
+          path: ~/world.txt
+
+      - name: 'Echo download path'
+        run: echo ${{steps.download.outputs.download-path}}
+      
+      
       - name: comment on PR with link
         uses: actions/github-script@v1
         with:
