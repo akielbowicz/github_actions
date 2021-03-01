@@ -1,4 +1,4 @@
-name: Test execution of pluto notebooks
+name: Test script
 on:
   # - push
   - pull_request
