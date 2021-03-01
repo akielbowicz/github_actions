@@ -1,7 +1,7 @@
 name: Test execution of pluto notebooks
 on:
-  - push
-  # - pull_request
+  # - push
+  - pull_request
 jobs:
   add-link-on-pr:
     name: Script  ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
