@@ -19,12 +19,13 @@ jobs:
       - run: echo hello > ~/world.txt
       - uses: actions/upload-artifact@v2
         with:
+          name: exquisit-artifact
           path: ~/world.txt
       
       - uses: actions/download-artifact@v2
         id: download
         with:
-          name: 'world.txt'
+          name: exquisit-artifact
           # path: ~/
 
       - name: 'Echo download path'
@@ -41,5 +42,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `https://mybinder.org/v2/gh/${context.repo.owner}/${context.repo.repo}/${BRANCH_NAME} :point_left: `
+              body: `${steps.download.outputs.download-path} https://mybinder.org/v2/gh/${context.repo.owner}/${context.repo.repo}/${BRANCH_NAME} :point_left: `
             })
