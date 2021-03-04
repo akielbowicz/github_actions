@@ -1,9 +1,10 @@
 name: Test script
 on:
-  # - push
-  - pull_request
+  - push
+  # - pull_request
 jobs:
-  add-link-on-pr:
+  # testing:
+  add_link_on_pr:
     name: Script  ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -15,32 +16,51 @@ jobs:
           - x64
     steps:
       - uses: actions/checkout@v2
-      
-      - run: echo hello > ~/world.txt
+
+      - name: Github Action for wget
+        uses: wei/wget@v1.1.1
+        with:
+          args: -O lenses_and_learners.pdf https://arxiv.org/pdf/1903.03671.pdf 
+
+      # - run: echo hello > ~/world.txt
       - uses: actions/upload-artifact@v2
         with:
           name: exquisit-artifact
-          path: ~/world.txt
+          path: ~/*.pdf
       
-      - uses: actions/download-artifact@v2
-        id: download
-        with:
-          name: exquisit-artifact
-          # path: ~/
+      # - name: POST
+      # - uses: actions/download-artifact@v2
+      #   id: download
+      #   with:
+      #     # name: exquisit-artifact
+      #     path: ~/
 
-      - name: 'Echo download path'
-        run: echo ${{steps.download.outputs.download-path}}
+      # - name: 'Echo download path'
+        # run: echo ${{steps.download.outputs.download-path}}
       
-      
-      - name: comment on PR with link
-        uses: actions/github-script@v1
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            var BRANCH_NAME = process.env.BRANCH_NAME;
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `${{steps.download.outputs.download-path}} https://mybinder.org/v2/gh/${context.repo.owner}/${context.repo.repo}/${BRANCH_NAME} :point_left: `
-            })
+      # - name: comment on PR with link to artifacts
+      #   uses: actions/github-script@v1
+      #   with:
+      #     github-token: ${{secrets.GITHUB_TOKEN}}
+      #     script: |
+      #       var BRANCH_NAME = process.env.BRANCH_NAME;
+      #       github.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${GITHUB_RUN_ID}#artifacts`
+      #       })
+      - run: |
+            echo "Home: ${HOME}"
+            echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+            echo "GITHUB_RUN_ID: ${GITHUB_RUN_ID}"
+            echo "GITHUB_RUN_NUMBER: ${GITHUB_RUN_NUMBER}"
+            echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
+            echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+            echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+            echo "GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}"
+            echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+            echo "GITHUB_SHA: ${GITHUB_SHA}"
+            echo "GITHUB_REF: ${GITHUB_REF}"
+      - run: env
+        
