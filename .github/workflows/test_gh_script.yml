@@ -1,7 +1,7 @@
 name: Test script
 on:
-  # - push
-  - pull_request
+  - push
+  # - pull_request
 jobs:
   add_link_on_pr:
     name: Script  ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
@@ -42,6 +42,7 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git add artifacts
           git commit -m "Add changes" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
