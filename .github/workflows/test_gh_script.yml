@@ -15,29 +15,36 @@ jobs:
           - x64
     steps:
       - uses: actions/checkout@v2
+        # with:
+          # ref: files
+      - run: echo hello > artifacts/${GITHUB_RUN_ID}-world.txt            
 
-      - run: mkdir artifacts
-      - name: Github Action for wget
-        uses: wei/wget@v1.1.1
-        with:
-          args: -O artifacts/lenses_and_learners.pdf https://arxiv.org/pdf/1903.03671.pdf 
+      # - run: mkdir artifacts
+      # - name: Github Action for wget
+      #   uses: wei/wget@v1.1.1
+      #   with:
+      #     args: -O artifacts/lenses_and_learners.pdf https://arxiv.org/pdf/1903.03671.pdf 
 
       - run: |
            echo hello > artifacts/world.pdf            
            ls -l artifacts/
 
-      - run: echo hello > artifacts/${GITHUB_RUN_ID}-world.txt            
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: exquisit-artifact-
-          path: 'artifacts/*.pdf'
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: exquisit-artifact-
+      #     path: 'artifacts/*.pdf'
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: lenses_and_learners.pdf
-          path: 'artifacts/lenses_and_learners.pdf'
-      
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: lenses_and_learners.pdf
+      #     path: 'artifacts/lenses_and_learners.pdf'
+
+      - name: update repo
+        run: |
+          git fetch
+          git merge origin/files 
+
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
