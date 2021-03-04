@@ -26,7 +26,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: exquisit-artifact
-          path: ~/*.pdf
+          path: ~/lenses_and_learners.pdf
       
       # - name: POST
       # - uses: actions/download-artifact@v2
