@@ -17,9 +17,9 @@ jobs:
       - uses: actions/checkout@v2
         # with:
           # ref: files
+      - run: mkdir artifacts
       - run: echo hello > artifacts/${GITHUB_RUN_ID}-world.txt            
 
-      # - run: mkdir artifacts
       # - name: Github Action for wget
       #   uses: wei/wget@v1.1.1
       #   with:
@@ -59,15 +59,15 @@ jobs:
           branch: files
 
 
-      - name: comment on PR with link to artifacts
-        uses: actions/github-script@v1
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            var BRANCH_NAME = process.env.BRANCH_NAME;
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${process.env.GITHUB_RUN_ID}#artifacts`
-            })
+      # - name: comment on PR with link to artifacts
+      #   uses: actions/github-script@v1
+      #   with:
+      #     github-token: ${{secrets.GITHUB_TOKEN}}
+      #     script: |
+      #       var BRANCH_NAME = process.env.BRANCH_NAME;
+      #       github.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${process.env.GITHUB_RUN_ID}#artifacts`
+      #       })
