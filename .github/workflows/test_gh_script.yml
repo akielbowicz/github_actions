@@ -17,18 +17,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - run: mkdir artifacts
       - name: Github Action for wget
         uses: wei/wget@v1.1.1
         with:
-          args: -O ~/lenses_and_learners.pdf https://arxiv.org/pdf/1903.03671.pdf 
+          args: -O artifacts/lenses_and_learners.pdf https://arxiv.org/pdf/1903.03671.pdf 
 
       - run: |
-           echo hello > ~/world.pdf            
-           ls -l ~/
+           echo hello > artifacts/world.pdf            
+           ls -l artifacts/
       - uses: actions/upload-artifact@v2
         with:
           name: exquisit-artifact
-          path: '~/*.pdf'
+          path: 'artifacts/*.pdf'
       
       # - name: POST
       # - uses: actions/download-artifact@v2
