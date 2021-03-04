@@ -39,15 +39,17 @@ jobs:
       #   with:
       #     name: lenses_and_learners.pdf
       #     path: 'artifacts/lenses_and_learners.pdf'
-
-      - name: update repo
-        run: |
-          git pull origin files --allow-unrelated-histories 
-
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+
+      - name: update repo
+        run: |
+          git pull origin files --allow-unrelated-histories --ff-only 
+
+      - name: Commit files
+        run: |
           git add artifacts
           git commit -m "Add changes" -a
       - name: Push changes
