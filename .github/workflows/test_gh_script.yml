@@ -17,8 +17,17 @@ jobs:
       - uses: actions/checkout@v2
         # with:
           # ref: files
-      - run: mkdir artifacts
-      - run: echo hello > artifacts/${GITHUB_RUN_ID}-world.txt            
+
+      - name: Set git info
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: update repo
+        run: |
+          git pull origin files --allow-unrelated-histories --rebase
+
+      - run: mkdir -p artifacts
 
       # - name: Github Action for wget
       #   uses: wei/wget@v1.1.1
@@ -39,15 +48,7 @@ jobs:
       #   with:
       #     name: lenses_and_learners.pdf
       #     path: 'artifacts/lenses_and_learners.pdf'
-      - name: Commit files
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-
-      - name: update repo
-        run: |
-          git pull origin files --allow-unrelated-histories --ff-only 
-
+      - run: echo hello > artifacts/${GITHUB_RUN_ID}-world.txt            
       - name: Commit files
         run: |
           git add artifacts
