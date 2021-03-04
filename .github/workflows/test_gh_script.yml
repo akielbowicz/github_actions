@@ -42,8 +42,7 @@ jobs:
 
       - name: update repo
         run: |
-          git fetch
-          git merge origin/files 
+          git pull origin files --allow-unrelated-histories 
 
       - name: Commit files
         run: |
