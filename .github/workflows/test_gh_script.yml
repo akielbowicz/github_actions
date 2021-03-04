@@ -25,7 +25,7 @@ jobs:
 
       - name: update repo
         run: |
-          git pull origin files --allow-unrelated-histories --rebase
+          git pull origin files --allow-unrelated-histories --no-rebase
 
       - run: mkdir -p artifacts
 
