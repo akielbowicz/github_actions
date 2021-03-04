@@ -26,9 +26,11 @@ jobs:
            echo hello > artifacts/world.pdf            
            ls -l artifacts/
 
+      - run: echo hello > artifacts/${GITHUB_RUN_ID}-world.txt            
+
       - uses: actions/upload-artifact@v2
         with:
-          name: exquisit-artifact
+          name: exquisit-artifact-
           path: 'artifacts/*.pdf'
 
       - uses: actions/upload-artifact@v2
@@ -36,6 +38,19 @@ jobs:
           name: lenses_and_learners.pdf
           path: 'artifacts/lenses_and_learners.pdf'
       
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # branch: ${{ github.ref }}
+          branch: files
+
+
       - name: comment on PR with link to artifacts
         uses: actions/github-script@v1
         with:
