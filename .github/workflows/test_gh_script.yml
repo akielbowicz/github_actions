@@ -52,7 +52,7 @@ jobs:
       - name: Commit files
         run: |
           git add artifacts
-          git commit -m "Add changes" -a
+          git commit -m "Add changes from GHA ${GITHUB_RUN_ID} of ${GITHUB_REF}" -a
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
